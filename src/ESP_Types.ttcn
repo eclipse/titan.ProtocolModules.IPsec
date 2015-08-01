@@ -1,0 +1,78 @@
+/******************************************************************************
+* Copyright (c) 2005, 2015  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* Gabor Szalai
+* Eszter Susanszky
+******************************************************************************/
+//
+//  File:               ESP_Types.ttcn
+//  Description:        IPsec ESP
+//  Rev:                R2A
+//  Prodnr:             CNL 113 809
+//  Reference:          http://tools.ietf.org/search/rfc4303
+//
+///////////////////////////////////////////////////////////////////////////////
+
+module ESP_Types
+{
+  import from General_Types all;
+
+  external function ef_ESP_encode(in ESP_Message pl_pdu) return octetstring with {
+    extension "prototype(convert)"
+    extension "encode(RAW)"
+  }
+  
+  external function ef_ESP_decode(in octetstring pl_stream, in integer pl_auth_length, out ESP_Message pl_pdu) return integer
+  
+  external function ef_ESP_Cipher_Data_encode(in ESP_Data pl_cipher) return octetstring with
+  {
+    extension "prototype(convert)"
+    extension "encode(RAW)"
+  }
+
+  type record ESP_Message
+  {
+      LIN4_BO_LAST          spi,
+      LIN4_BO_LAST          sequence_number,
+    octetstring      encrypted_data,
+    octetstring           authentication_data
+  } with {
+    variant ""
+  }
+  
+  type record ESP_Data
+  {
+    octetstring          payload_data,
+    octetstring          padding,
+    INT1                 pad_length,
+    INT1                 next_header    
+  } with {
+    variant (pad_length) "LENGTHTO(padding)"
+  }
+  
+  function f_ESP_Cipher_Data_decode(in octetstring pl_stream, out ESP_Data pl_ret_val) return integer
+  {
+    if(lengthof(pl_stream)>=2){ // next_header + pad_length fields should be present
+      pl_ret_val.next_header := oct2int(substr(pl_stream, lengthof(pl_stream)-1, 1))
+      pl_ret_val.pad_length := oct2int(substr(pl_stream, lengthof(pl_stream)-2, 1))
+
+      var integer vl_pad_length := pl_ret_val.pad_length
+
+      if(lengthof(pl_stream)>= 2 + vl_pad_length){ // next_header + pad_length fields + padding bytes
+        pl_ret_val.padding := substr(pl_stream, lengthof(pl_stream)-2-vl_pad_length, vl_pad_length)
+        pl_ret_val.payload_data := substr(pl_stream, 0, lengthof(pl_stream)-2-vl_pad_length)
+        return 0;
+      }
+    }
+    return 1;
+  }
+
+} with { 
+encode "RAW"
+extension "version R2A"
+}  // end of module

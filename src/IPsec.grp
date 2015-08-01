@@ -1,0 +1,24 @@
+<!--
+/******************************************************************************
+* Copyright (c) 2005, 2015  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* Gabor Szalai
+* Eszter Susanszky
+******************************************************************************/
+//
+//  File:         IPsec.grp
+//  Description:  FileGroup file for IPsec
+//  Rev:          R2A
+//  Prodnr:       CNL 113 809
+///////////////////////////////////////////////////////////////////////////////
+-->
+<!DOCTYPE TITAN_GUI_FileGroup_file>
+    <File_Group name="IPsec" >
+        <File path="ESP_encdec.cc" />
+        <File path="ESP_Types.ttcn" />
+    </File_Group>

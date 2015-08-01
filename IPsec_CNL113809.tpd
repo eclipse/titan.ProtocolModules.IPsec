@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2015 Ericsson
+
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+
+   File:               IPsec_CNL113809.tpd
+   Description:        tpd project file
+   Rev:                R2A
+   Prodnr:             CNL 113 809
+
+ -->
+<TITAN_Project_File_Information version="1.0">
+  <ProjectName>IPsec_CNL113809</ProjectName>
+  <ReferencedProjects>
+    <ReferencedProject name="ProtocolModules_Common" projectLocationURI="../COMMON/ProtocolModules_Common.tpd"/>
+  </ReferencedProjects>
+  <Folders>
+    <FolderResource projectRelativePath="src" relativeURI="src"/>
+  </Folders>
+  <Files>
+    <FileResource projectRelativePath="src/ESP_Types.ttcn" relativeURI="src/ESP_Types.ttcn"/>
+    <FileResource projectRelativePath="src/ESP_encdec.cc" relativeURI="src/ESP_encdec.cc"/>
+    <FileResource projectRelativePath="src/IPsec.grp" relativeURI="src/IPsec.grp"/>
+  </Files>
+  <ActiveConfiguration>Default</ActiveConfiguration>
+  <Configurations>
+    <Configuration name="Default">
+      <ProjectProperties>
+        <MakefileSettings>
+          <generateInternalMakefile>true</generateInternalMakefile>
+          <GNUMake>true</GNUMake>
+          <incrementalDependencyRefresh>true</incrementalDependencyRefresh>
+          <targetExecutable>bin/IPsec</targetExecutable>
+        </MakefileSettings>
+        <LocalBuildSettings>
+          <workingDirectory>bin</workingDirectory>
+        </LocalBuildSettings>
+      </ProjectProperties>
+    </Configuration>
+  </Configurations>
+</TITAN_Project_File_Information>
